@@ -1,6 +1,21 @@
 part of 'pages.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    Future.delayed(Duration(seconds: 5), () {
+      Get.offAll(SignInPage());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,12 +29,17 @@ class SplashScreen extends StatelessWidget {
               Container(
                   child: Text(
                 "OTO",
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
+                style: GoogleFonts.calistoga(
+                    fontSize: 50,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
               )),
               Container(
                   child: Text("MUDIAK",
-                      style: TextStyle(
-                          fontSize: 50, fontWeight: FontWeight.w500))),
+                      style: GoogleFonts.calistoga(
+                          fontSize: 50,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white))),
             ],
           ),
         ),
