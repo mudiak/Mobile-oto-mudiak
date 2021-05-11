@@ -21,50 +21,53 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: "F6F7F9".toColor(),
-        child: Stack(
-          children: [
-            PageView(
-              controller: pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  selectedPage = index;
-                });
-              },
-              children: [
-                Center(child: HomePage()),
-                Center(
-                  child: Text('dsf'),
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 46,
-                width: 46,
-                margin: EdgeInsets.only(bottom: 42),
-                child: FloatingActionButton(
-                  elevation: 0,
-                  backgroundColor: "FBD460".toColor(),
-                  child: SizedBox(
-                    height: 26,
-                    width: 26,
-                    child: Icon(MdiIcons.walletPlusOutline,
-                        color: Colors.black.withOpacity(0.54)),
-                  ),
+      body: Stack(
+        children: [
+          PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                selectedPage = index;
+              });
+            },
+            children: [
+              Center(child: HomePage()),
+              Center(
+                child: HistoryPage(),
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 46,
+              width: 46,
+              margin: EdgeInsets.only(bottom: 42),
+              child: FloatingActionButton(
+                onPressed: () {},
+                elevation: 0,
+                backgroundColor: "FBD460".toColor(),
+                child: SizedBox(
+                  height: 23,
+                  width: 23,
+                  child: Image(image: AssetImage("assets/topup.png")),
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: BottomTabbar(
-                onTap: (index) {},
-              ),
-            )
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomTabbar(
+              selectedIndex: selectedPage,
+              onTap: (index) {
+                setState(() {
+                  selectedPage = index;
+                });
+                pageController.jumpToPage(selectedPage);
+              },
+            ),
+          )
+        ],
       ),
     );
   }

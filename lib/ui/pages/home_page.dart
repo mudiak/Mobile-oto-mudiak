@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    margin: EdgeInsets.fromLTRB(16, 0, 5, 0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,25 +98,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Container(
-          height: 50,
-          margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: Icon(
-                Icons.search,
-                color: Colors.grey,
+          height: 35,
+          margin: EdgeInsets.fromLTRB(40, 10, 40, 0),
+          child: Center(
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                suffixIcon:
+                    GestureDetector(onTap: () {}, child: Icon(Icons.cancel)),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              hintText: "Search",
-              suffixIcon:
-                  GestureDetector(onTap: () {}, child: Icon(Icons.cancel)),
             ),
           ),
         ),
@@ -124,10 +126,30 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
           children: [
             Container(
-              child: ItemTiket(),
+              child: ItemTicket(
+                goal: "Padang Panjang",
+              ),
+            ),
+            Container(
+              child: ItemTicket(
+                goal: "Payakumbuh",
+              ),
+            ),
+            Container(
+              child: ItemTicket(
+                goal: "BukitTinggi",
+              ),
+            ),
+            Container(
+              child: ItemTicket(
+                goal: "BukitTinggi",
+              ),
             ),
           ],
         )),
+        SizedBox(
+          height: 70,
+        )
       ],
     );
   }

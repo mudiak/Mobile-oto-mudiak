@@ -40,7 +40,13 @@ class BottomTabbar extends StatelessWidget {
                                     : '.png')),
                             fit: BoxFit.contain)),
                   ),
-                  Text("New Ticket")
+                  Text(
+                    "New Ticket",
+                    style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w400,
+                        color:
+                            (selectedIndex == 0) ? Colors.black : Colors.grey),
+                  )
                 ],
               ),
             ),
@@ -53,6 +59,7 @@ class BottomTabbar extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
+                    margin: EdgeInsets.only(top: 5),
                     width: 60,
                     height: 40,
                     // margin: EdgeInsets.symmetric(horizontal: 83),
@@ -64,7 +71,13 @@ class BottomTabbar extends StatelessWidget {
                                     : '.png')),
                             fit: BoxFit.contain)),
                   ),
-                  Text("My Ticket")
+                  Text(
+                    "My Ticket",
+                    style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w400,
+                        color:
+                            (selectedIndex == 1) ? Colors.black : Colors.grey),
+                  )
                 ],
               ),
             )
