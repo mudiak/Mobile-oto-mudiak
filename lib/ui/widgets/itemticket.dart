@@ -21,6 +21,7 @@ class ItemTicket extends StatelessWidget {
     return Container(
       margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
       height: 100,
+      width: double.infinity,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -49,72 +50,79 @@ class ItemTicket extends StatelessWidget {
                       dashColor: "E4E4E4".toColor(),
                       lineThickness: 2.5,
                     )),
-                Container(
-                  margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: Text("Sinamar",
-                            style: GoogleFonts.raleway(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      Row(
-                        children: [
-                          Text("Limbanang",
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          child: Text("Sinamar",
                               style: GoogleFonts.raleway(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold)),
-                          Center(
-                            child: Container(
-                                width: MediaQuery.of(context).size.width / 4,
-                                margin: EdgeInsets.all(5),
-                                child: DottedLine(
-                                  dashColor: "FBD460".toColor(),
-                                  lineThickness: 2.5,
-                                )),
-                          ),
-                          Text(
-                              (jum > 11)
-                                  ? "" + goal.substring(0, 11) + "...."
-                                  : goal,
-                              style: GoogleFonts.raleway(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: Text("06:00",
-                                  style: GoogleFonts.raleway(
-                                      color: "A4A4A4".toColor(),
-                                      fontWeight: FontWeight.w600))),
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: Icon(MdiIcons.timerOutline),
-                          ),
-                          Text("3h 20m",
-                              style: GoogleFonts.raleway(
-                                  color: "A4A4A4".toColor(),
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          Container(
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text("RP. 1.135.000",
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Limbanang",
+                                style: GoogleFonts.raleway(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold)),
+                            Center(
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  margin: EdgeInsets.all(5),
+                                  child: DottedLine(
+                                    dashColor: "FBD460".toColor(),
+                                    lineThickness: 2.5,
+                                  )),
+                            ),
+                            Text(
+                                (jum > 11)
+                                    ? "" + goal.substring(0, 11) + "...."
+                                    : goal,
+                                style: GoogleFonts.raleway(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: Text("06:00",
+                                        style: GoogleFonts.raleway(
+                                            color: "A4A4A4".toColor(),
+                                            fontWeight: FontWeight.w600))),
+                                Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: Icon(MdiIcons.timerOutline),
+                                ),
+                                Text("3h 54m",
                                     style: GoogleFonts.raleway(
                                         color: "A4A4A4".toColor(),
-                                        fontWeight: FontWeight.w600))),
-                          )
-                        ],
-                      )
-                    ],
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            Container(
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("RP. 35.000",
+                                      style: GoogleFonts.raleway(
+                                          color: "A4A4A4".toColor(),
+                                          fontWeight: FontWeight.w600))),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],

@@ -125,9 +125,14 @@ class _HomePageState extends State<HomePage> {
         Expanded(
             child: ListView(
           children: [
-            Container(
-              child: ItemTicket(
-                goal: "Padang Panjang",
+            GestureDetector(
+              onTap: () {
+                Get.to(SeatPage());
+              },
+              child: Container(
+                child: ItemTicket(
+                  goal: "Padang Panjang",
+                ),
               ),
             ),
             Container(

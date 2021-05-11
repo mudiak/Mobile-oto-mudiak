@@ -13,3 +13,4 @@ part 'signUpPage.dart';
 part 'mainPage.dart';
 part 'home_page.dart';
 part 'historyPage.dart';
+part 'seatPage.dart';

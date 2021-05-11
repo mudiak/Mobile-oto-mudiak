@@ -7,3 +7,4 @@ import 'package:supercharged/supercharged.dart';
 
 part 'bottom_tabbar.dart';
 part 'itemticket.dart';
+part 'itemMyTicket.dart';
