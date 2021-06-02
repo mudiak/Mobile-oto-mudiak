@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: MainPage(),
+        body: SplashScreen(),
       ),
     );
   }
