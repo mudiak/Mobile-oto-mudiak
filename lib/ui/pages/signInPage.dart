@@ -6,6 +6,11 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  SharePreferencesHelper pref = SharePreferencesHelper();
+
+  LoginModel loginModel = null;
   bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
@@ -54,8 +59,9 @@ class _SignInPageState extends State<SignInPage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
-                        labelText: "Email Address",
+                        labelText: "Username",
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(color: Colors.grey),
@@ -64,7 +70,7 @@ class _SignInPageState extends State<SignInPage> {
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(color: Colors.blue),
                         ),
-                        hintText: "Please Enter Email",
+                        hintText: "Please Enter  Username",
                       ),
                     ),
                   ),
@@ -74,6 +80,7 @@ class _SignInPageState extends State<SignInPage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: TextField(
+                      controller: passwordController,
                       obscureText: _isObscure,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -120,7 +127,25 @@ class _SignInPageState extends State<SignInPage> {
                     height: 50,
                   ),
                   GestureDetector(
-                    onTap: () => Get.offAll(MainPage()),
+                    onTap: () => LoginModel.connectToAPI(
+                            usernameController.text, passwordController.text)
+                        .then((value) {
+                      loginModel = value;
+                      pref.setEmail(loginModel.email);
+                      pref.setUsername(loginModel.username);
+                      pref.setPathPicture(loginModel.pathPicture);
+                      // print(pref.getEmail());
+                      Future<String> authToken = pref.getEmail();
+                      authToken.then((data) {
+                        print("authToken " + data.toString());
+                      }, onError: (e) {
+                        print(e);
+                      });
+                      print(loginModel.response);
+                      // print(loginModel.email);
+                      // print(loginModel.kode);
+                      // print(loginModel.name);
+                    }),
                     child: Container(
                       height: 65,
                       width: 65,
@@ -142,7 +167,9 @@ class _SignInPageState extends State<SignInPage> {
                               fontWeight: FontWeight.w400, color: Colors.grey),
                         ),
                         GestureDetector(
-                          onTap: () => Get.to(SignUpPage()),
+                          onTap: () {
+                            Get.to(SignUpPage());
+                          },
                           child: Text("Sign Up",
                               style: GoogleFonts.raleway(
                                   fontWeight: FontWeight.w400,

@@ -6,6 +6,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String nama = "No Name";
+  String pathPicture = "jsjs";
+  SharePreferencesHelper pref = SharePreferencesHelper();
+  getName() async {
+    nama = await pref.getUsername();
+    return nama;
+  }
+
+  getPathPicture() async {
+    pathPicture = await pref.getPathPicture();
+    return pathPicture;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,23 +42,32 @@ class _HomePageState extends State<HomePage> {
                     child: Stack(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2.5),
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.all(5),
-                            width: 50,
-                            height: 50,
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"),
-                                  fit: BoxFit.contain,
-                                )),
-                          ),
-                        )
+                              shape: BoxShape.circle,
+                              border:
+                                  Border.all(color: Colors.white, width: 2.5),
+                            ),
+                            child: FutureBuilder(
+                                future: getPathPicture(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  {
+                                    return Container(
+                                      margin: EdgeInsets.all(5),
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: NetworkImage((snapshot
+                                                    .hasData)
+                                                ? pathPicture
+                                                : "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    );
+                                  }
+                                }))
                       ],
                     ),
                   ),
@@ -55,13 +77,22 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Hanif Aulia Sabri",
-                          style: GoogleFonts.raleway(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white),
-                        ),
+                        FutureBuilder(
+                            future: getName(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  nama,
+                                  style: GoogleFonts.raleway(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                );
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            }),
                         SizedBox(
                           height: 6,
                         ),

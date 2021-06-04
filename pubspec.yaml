@@ -32,6 +32,7 @@ dependencies:
   image_picker: ^0.7.5+2
   lottie: ^1.0.1
   material_design_icons_flutter: ^4.0.5955
+  shared_preferences: ^2.0.6
   simple_textfield_search_bar: ^0.0.1+1
   supercharged: ^2.0.0
 

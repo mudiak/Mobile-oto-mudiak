@@ -6,13 +6,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SharePreferencesHelper pref = SharePreferencesHelper();
   @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
     Future.delayed(Duration(seconds: 5), () {
-      Get.offAll(SignInPage());
+      Future<String> authToken = pref.getEmail();
+      authToken.then((data) {
+        if (data == null) {
+          Get.offAll(SignInPage());
+        } else {
+          Get.offAll(MainPage());
+        }
+      }, onError: (e) {
+        print(e);
+      });
     });
   }
 

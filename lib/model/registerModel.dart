@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+part of 'models.dart';
 
 class RegisterModel {
   String response;
@@ -15,7 +13,7 @@ class RegisterModel {
   static Future<RegisterModel> connectToAPI(
       String id_customer, String name, String email, String password) async {
     var apiURL =
-        Uri.parse("http://10.234.251.42/oto_mudiak/API/register.php?aksi=db");
+        Uri.parse("http://192.168.0.105/oto_mudiak/API/register.php?aksi=db");
 
     var apiResult = await http.post(apiURL, body: {
       "id_customer": id_customer,

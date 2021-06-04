@@ -7,9 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:oto_mudiak/model/registerModel.dart';
+import 'package:oto_mudiak/model/models.dart';
+import 'package:oto_mudiak/shared/shared.dart';
 import 'package:oto_mudiak/ui/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:get/get.dart';
 
