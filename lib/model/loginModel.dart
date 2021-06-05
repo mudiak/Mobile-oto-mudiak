@@ -6,6 +6,7 @@ class LoginModel {
   String name;
   String username;
   String email;
+  int wallet;
   String pathPicture;
 
   LoginModel(
@@ -14,6 +15,7 @@ class LoginModel {
       this.name,
       this.username,
       this.email,
+      this.wallet,
       this.pathPicture});
 
   factory LoginModel.loginCustomer(Map<String, dynamic> object) {
@@ -23,11 +25,12 @@ class LoginModel {
         name: object['name'],
         username: object['username'],
         email: object['email'],
+        wallet: int.parse(object['wallet']),
         pathPicture: object['pathPicture']);
   }
   static Future<LoginModel> connectToAPI(
       String emailoruser, String password) async {
-    var apiURL = Uri.parse("http://192.168.0.105/oto_mudiak/API/login.php");
+    var apiURL = Uri.parse(url + "/login.php");
 
     var apiResult = await http
         .post(apiURL, body: {"username": emailoruser, "password": password});

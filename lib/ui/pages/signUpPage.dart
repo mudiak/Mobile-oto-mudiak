@@ -37,8 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
       String id_customer, String name, String email, String password) async {
     //show your own loading or progressing code here
 
-    Uri uploadurl = Uri.parse(
-        "http://192.168.0.105/oto_mudiak/API/register.php?aksi=uploadpict");
+    Uri uploadurl = Uri.parse(url + "register.php?aksi=uploadpict");
     //dont use http://localhost , because emulator don't get that address
     //insted use your local IP address or use live URL
     //hit "ipconfig" in windows or "ip a" in linux to get you local IP

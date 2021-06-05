@@ -1,13 +1,10 @@
 part of 'pages.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   String nama = "No Name";
   String pathPicture = "jsjs";
+  int balance = 0;
+
   SharePreferencesHelper pref = SharePreferencesHelper();
   getName() async {
     nama = await pref.getUsername();
@@ -19,8 +16,14 @@ class _HomePageState extends State<HomePage> {
     return pathPicture;
   }
 
+  getWallet() async {
+    balance = await pref.getWallet();
+    return balance;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var busProvider = Provider.of<BusProvider>(context);
     return Column(
       children: [
         Container(
@@ -61,7 +64,8 @@ class _HomePageState extends State<HomePage> {
                                           image: DecorationImage(
                                             image: NetworkImage((snapshot
                                                     .hasData)
-                                                ? pathPicture
+                                                ? "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"
+                                                // url + "" + pathPicture
                                                 : "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"),
                                             fit: BoxFit.cover,
                                           )),
@@ -96,13 +100,22 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 6,
                         ),
-                        Text(
-                          "IDR 100.000",
-                          style: GoogleFonts.raleway(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white),
-                        ),
+                        FutureBuilder(
+                            future: getWallet(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  "IDR " + balance.toString(),
+                                  style: GoogleFonts.raleway(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                );
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            }),
                       ],
                     ),
                   ),
@@ -154,35 +167,37 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Expanded(
-            child: ListView(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.to(SeatPage());
-              },
-              child: Container(
-                child: ItemTicket(
-                  goal: "Padang Panjang",
-                ),
-              ),
-            ),
-            Container(
-              child: ItemTicket(
-                goal: "Payakumbuh",
-              ),
-            ),
-            Container(
-              child: ItemTicket(
-                goal: "BukitTinggi",
-              ),
-            ),
-            Container(
-              child: ItemTicket(
-                goal: "BukitTinggi",
-              ),
-            ),
-          ],
-        )),
+          child: FutureBuilder(
+            future: busProvider.getListBus(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Bus> data = snapshot.data;
+
+                int index = 0;
+
+                return ListView(
+                  children: data.map((item) {
+                    index++;
+                    return Container(
+                      margin: EdgeInsets.only(
+                        top: index == 1 ? 0 : 30,
+                      ),
+                      child: GestureDetector(
+                          onTap: () {
+                            Get.to(SeatPage());
+                          },
+                          child: ItemTicket(item)),
+                    );
+                  }).toList(),
+                );
+              }
+
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ),
         SizedBox(
           height: 70,
         )

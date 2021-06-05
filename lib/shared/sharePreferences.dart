@@ -4,6 +4,7 @@ class SharePreferencesHelper {
   final String isLogin = "isLogin";
   final String email = "email";
   final String username = "username";
+  final String wallet = "wallet";
   final String pathPicture = "pathPicture";
 
   Future<void> setLogin(bool isLogin) async {
@@ -32,6 +33,19 @@ class SharePreferencesHelper {
     return email;
   }
 
+  Future<void> setWallet(int wallet) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(this.wallet, wallet);
+  }
+
+//get value from shared preferences
+  Future<int> getWallet() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int wallet;
+    wallet = pref.getInt(this.wallet) ?? 0;
+    return wallet;
+  }
+
   Future<void> setUsername(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(this.username, username);
@@ -57,5 +71,11 @@ class SharePreferencesHelper {
     pathPicture = pref.getString(this.pathPicture) ??
         "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg";
     return pathPicture;
+  }
+
+  Future<String> logout() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
+    Get.offAll(SignInPage());
   }
 }

@@ -9,8 +9,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  SharePreferencesHelper pref = SharePreferencesHelper();
   int selectedPage = 0;
+  String balance = "";
+  String nama = "No Name";
+
   PageController pageController = PageController(initialPage: 0);
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +49,9 @@ class _MainPageState extends State<MainPage> {
               width: 46,
               margin: EdgeInsets.only(bottom: 42),
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  pref.logout();
+                },
                 elevation: 0,
                 backgroundColor: "FBD460".toColor(),
                 child: SizedBox(

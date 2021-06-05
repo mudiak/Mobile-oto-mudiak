@@ -1,23 +1,12 @@
 part of 'widgets.dart';
 
 class ItemTicket extends StatelessWidget {
-  String company;
-  String from;
-  String goal;
-  String berangkat;
-  int secondlama;
-  double price;
+  final Bus bus;
 
-  ItemTicket(
-      {this.company,
-      this.from,
-      this.goal,
-      this.berangkat,
-      this.price,
-      this.secondlama});
+  ItemTicket(this.bus);
   @override
   Widget build(BuildContext context) {
-    int jum = goal.length;
+    int jum = bus.finish.length;
     return Container(
       margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
       height: 100,
@@ -29,7 +18,7 @@ class ItemTicket extends StatelessWidget {
             BoxShadow(
               color: Colors.black26,
               blurRadius: 0.5,
-              offset: Offset(1, 1), // Shadow position
+              offset: Offset(0, 1), // Shadow position
             ),
           ],
           color: Colors.white,
@@ -57,7 +46,7 @@ class ItemTicket extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                          child: Text("Sinamar",
+                          child: Text(bus.nama,
                               style: GoogleFonts.raleway(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold)),
@@ -66,7 +55,7 @@ class ItemTicket extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Limbanang",
+                            Text(bus.start,
                                 style: GoogleFonts.raleway(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold)),
@@ -81,8 +70,8 @@ class ItemTicket extends StatelessWidget {
                             ),
                             Text(
                                 (jum > 11)
-                                    ? "" + goal.substring(0, 11) + "...."
-                                    : goal,
+                                    ? "" + bus.finish.substring(0, 11) + "...."
+                                    : bus.finish,
                                 style: GoogleFonts.raleway(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold))
@@ -97,7 +86,7 @@ class ItemTicket extends StatelessWidget {
                               children: [
                                 Container(
                                     margin: EdgeInsets.only(right: 10),
-                                    child: Text("06:00",
+                                    child: Text(bus.time,
                                         style: GoogleFonts.raleway(
                                             color: "A4A4A4".toColor(),
                                             fontWeight: FontWeight.w600))),
@@ -105,7 +94,7 @@ class ItemTicket extends StatelessWidget {
                                   margin: EdgeInsets.only(right: 10),
                                   child: Icon(MdiIcons.timerOutline),
                                 ),
-                                Text("3h 54m",
+                                Text(bus.lama,
                                     style: GoogleFonts.raleway(
                                         color: "A4A4A4".toColor(),
                                         fontWeight: FontWeight.w600)),
@@ -114,7 +103,7 @@ class ItemTicket extends StatelessWidget {
                             Container(
                               child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text("RP. 35.000",
+                                  child: Text("RP. " + bus.price.toString(),
                                       style: GoogleFonts.raleway(
                                           color: "A4A4A4".toColor(),
                                           fontWeight: FontWeight.w600))),

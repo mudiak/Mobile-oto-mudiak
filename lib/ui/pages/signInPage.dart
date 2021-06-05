@@ -9,7 +9,6 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   SharePreferencesHelper pref = SharePreferencesHelper();
-
   LoginModel loginModel = null;
   bool _isObscure = true;
   @override
@@ -127,24 +126,40 @@ class _SignInPageState extends State<SignInPage> {
                     height: 50,
                   ),
                   GestureDetector(
+                    // onTap: () => Wallet.connectToAPI("11").then((value) {
+                    //   wallet = value;
+                    //   print(wallet.wallet);
+                    // }),
                     onTap: () => LoginModel.connectToAPI(
                             usernameController.text, passwordController.text)
                         .then((value) {
                       loginModel = value;
-                      pref.setEmail(loginModel.email);
-                      pref.setUsername(loginModel.username);
-                      pref.setPathPicture(loginModel.pathPicture);
-                      // print(pref.getEmail());
-                      Future<String> authToken = pref.getEmail();
-                      authToken.then((data) {
-                        print("authToken " + data.toString());
-                      }, onError: (e) {
-                        print(e);
-                      });
-                      print(loginModel.response);
-                      // print(loginModel.email);
-                      // print(loginModel.kode);
-                      // print(loginModel.name);
+                      print(loginModel.wallet);
+                      print(pref.getEmail());
+                      if (loginModel.kode == 1) {
+                        pref.setEmail(loginModel.email);
+                        pref.setUsername(loginModel.username);
+                        pref.setWallet(loginModel.wallet);
+                        pref.setPathPicture(loginModel.pathPicture);
+                        Get.offAll(MainPage());
+                      } else {
+                        Get.snackbar("", "",
+                            backgroundColor: "F6C30E".toColor(),
+                            icon: Icon(
+                              Icons.info_rounded,
+                              color: Colors.white,
+                            ),
+                            titleText: Text(
+                              "Warning",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            messageText: Text(
+                              loginModel.response,
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            ));
+                      }
                     }),
                     child: Container(
                       height: 65,

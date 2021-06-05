@@ -12,8 +12,7 @@ class RegisterModel {
 
   static Future<RegisterModel> connectToAPI(
       String id_customer, String name, String email, String password) async {
-    var apiURL =
-        Uri.parse("http://192.168.0.105/oto_mudiak/API/register.php?aksi=db");
+    var apiURL = Uri.parse(url + "register.php?aksi=db");
 
     var apiResult = await http.post(apiURL, body: {
       "id_customer": id_customer,
