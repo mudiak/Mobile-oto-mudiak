@@ -1,11 +1,19 @@
 part of 'pages.dart';
 
-class HomePage extends StatelessWidget {
-  String nama = "No Name";
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String nama;
+
   String pathPicture = "jsjs";
+
   int balance = 0;
 
   SharePreferencesHelper pref = SharePreferencesHelper();
+
   getName() async {
     nama = await pref.getUsername();
     return nama;
@@ -64,7 +72,9 @@ class HomePage extends StatelessWidget {
                                           image: DecorationImage(
                                             image: NetworkImage((snapshot
                                                     .hasData)
-                                                ? "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"
+                                                ? url +
+                                                    "" +
+                                                    snapshot.data.toString()
                                                 // url + "" + pathPicture
                                                 : "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"),
                                             fit: BoxFit.cover,
@@ -100,22 +110,45 @@ class HomePage extends StatelessWidget {
                         SizedBox(
                           height: 6,
                         ),
-                        FutureBuilder(
-                            future: getWallet(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  "IDR " + balance.toString(),
-                                  style: GoogleFonts.raleway(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                );
-                              } else {
-                                return CircularProgressIndicator();
-                              }
-                            }),
+                        (nama != null)
+                            ? FutureBuilder(
+                                future: busProvider.getWallet(nama),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  pref.setWallet(
+                                      int.parse(snapshot.data.toString()));
+                                  if (snapshot.hasData) {
+                                    balance =
+                                        int.parse(snapshot.data.toString());
+                                    return Text(
+                                      "IDR " + balance.toString(),
+                                      style: GoogleFonts.raleway(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                })
+                            : FutureBuilder(
+                                future: getWallet(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.hasData) {
+                                    balance =
+                                        int.parse(snapshot.data.toString());
+                                    return Text(
+                                      "IDR " + balance.toString(),
+                                      style: GoogleFonts.raleway(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                })
                       ],
                     ),
                   ),
@@ -180,11 +213,18 @@ class HomePage extends StatelessWidget {
                     index++;
                     return Container(
                       margin: EdgeInsets.only(
-                        top: index == 1 ? 0 : 30,
-                      ),
+                          // top: index == 1 ? 0 : 30,
+                          ),
                       child: GestureDetector(
                           onTap: () {
-                            Get.to(SeatPage());
+                            Get.to(SeatPage(
+                                item.idbus,
+                                item.start,
+                                item.finish,
+                                item.nama,
+                                (item.time).substring(0, 5),
+                                item.date,
+                                item.price));
                           },
                           child: ItemTicket(item)),
                     );

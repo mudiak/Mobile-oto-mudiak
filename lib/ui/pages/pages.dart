@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:oto_mudiak/model/bus.dart';
 import 'package:oto_mudiak/model/models.dart';
@@ -25,3 +27,4 @@ part 'mainPage.dart';
 part 'home_page.dart';
 part 'historyPage.dart';
 part 'seatPage.dart';
+part 'checkOutPage.dart';

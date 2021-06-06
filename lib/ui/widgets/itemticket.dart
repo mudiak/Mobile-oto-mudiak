@@ -6,6 +6,22 @@ class ItemTicket extends StatelessWidget {
   ItemTicket(this.bus);
   @override
   Widget build(BuildContext context) {
+    String la = "";
+    if ((bus.lama.substring(0, 2).substring(0, 1) == "0")) {
+      la = "" + bus.lama.substring(1, 2) + "h ";
+      if ((bus.lama.substring(3, 5).substring(0, 1) == "0")) {
+        la = la + " " + (bus.lama.substring(4, 5)).substring(0, 1) + "m";
+      } else {
+        la = la + " " + (bus.lama.substring(3, 5)).substring(0, 2) + "m";
+      }
+    } else {
+      la = "" + bus.lama.substring(0, 2) + "h ";
+      if ((bus.lama.substring(3, 5).substring(0, 1) == "0")) {
+        la = la + " " + (bus.lama.substring(4, 5)).substring(0, 1) + "m";
+      } else {
+        la = la + " " + (bus.lama.substring(3, 5)).substring(0, 2) + "m";
+      }
+    }
     int jum = bus.finish.length;
     return Container(
       margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -86,7 +102,7 @@ class ItemTicket extends StatelessWidget {
                               children: [
                                 Container(
                                     margin: EdgeInsets.only(right: 10),
-                                    child: Text(bus.time,
+                                    child: Text((bus.time).substring(0, 5),
                                         style: GoogleFonts.raleway(
                                             color: "A4A4A4".toColor(),
                                             fontWeight: FontWeight.w600))),
@@ -94,7 +110,7 @@ class ItemTicket extends StatelessWidget {
                                   margin: EdgeInsets.only(right: 10),
                                   child: Icon(MdiIcons.timerOutline),
                                 ),
-                                Text(bus.lama,
+                                Text(la,
                                     style: GoogleFonts.raleway(
                                         color: "A4A4A4".toColor(),
                                         fontWeight: FontWeight.w600)),

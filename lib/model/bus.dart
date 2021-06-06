@@ -3,6 +3,7 @@ class Bus {
   String idagency;
   String nama;
   String time;
+  String date;
   String lama;
   String start;
   String finish;
@@ -13,6 +14,7 @@ class Bus {
       this.idagency,
       this.nama,
       this.time,
+      this.date,
       this.lama,
       this.start,
       this.finish,
@@ -23,6 +25,7 @@ class Bus {
     idagency = json['idagency'];
     nama = json['nama'];
     time = json['timestart'];
+    date = json['tgl'];
     lama = json['lama'];
     start = json['startaddress'];
     finish = json['finishaddress'];

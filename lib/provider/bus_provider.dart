@@ -20,4 +20,14 @@ class BusProvider extends ChangeNotifier {
       return <Bus>[];
     }
   }
+
+  getWallet(String username) async {
+    var result = await http
+        .get(Uri.parse(url + 'customers.php?page=wallet&username=' + username));
+    var data = jsonDecode(result.body);
+    print(result.body);
+    print(username);
+    String wallet = data['balance'];
+    return wallet;
+  }
 }
