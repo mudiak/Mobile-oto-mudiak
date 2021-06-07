@@ -397,8 +397,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     image: AssetImage(
                                         "assets/button_primary_circle.png"))),
                           )
-                        : Center(
-                            child: CircularProgressIndicator(),
+                        : Container(
+                            height: 100,
+                            width: 100,
+                            child: Center(
+                                child:
+                                    LottieBuilder.asset("assets/loading.json")),
                           ),
                   ),
                   Container(

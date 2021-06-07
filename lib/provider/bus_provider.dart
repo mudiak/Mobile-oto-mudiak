@@ -7,7 +7,7 @@ import 'package:oto_mudiak/shared/services.dart';
 
 class BusProvider extends ChangeNotifier {
   getListBus() async {
-    var result = await http.get(Uri.parse(url + 'listBus.php'));
+    var result = await http.get(Uri.parse(url + 'listBus.php?page=list'));
 
     print(result.statusCode);
     print(result.body);
@@ -29,5 +29,31 @@ class BusProvider extends ChangeNotifier {
     print(username);
     String wallet = data['balance'];
     return wallet;
+  }
+
+  getNama(String username) async {
+    var result = await http
+        .get(Uri.parse(url + 'customers.php?page=nama&username=' + username));
+    var data = jsonDecode(result.body);
+    print(result.body);
+    print(username);
+    String nama = data['nama'];
+    return nama;
+  }
+
+  static Future<String> postCheckOut(
+      String idbus, String username, String seat, String price) async {
+    var apiURL = Uri.parse(url + "listBus.php?page=checkout");
+
+    var apiResult = await http.post(apiURL, body: {
+      "idbus": idbus,
+      "username": username,
+      "seat": seat,
+      "price": price
+    });
+
+    var jsonObject = json.decode(apiResult.body);
+    print(jsonObject['response']);
+    return jsonObject['response'];
   }
 }

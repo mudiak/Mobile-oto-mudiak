@@ -96,13 +96,18 @@ class _HomePageState extends State<HomePage> {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
-                                return Text(
-                                  nama,
-                                  style: GoogleFonts.raleway(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                );
+                                return FutureBuilder(
+                                    future: busProvider.getNama(nama),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      return Text(
+                                        snapshot.data.toString(),
+                                        style: GoogleFonts.raleway(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      );
+                                    });
                               } else {
                                 return CircularProgressIndicator();
                               }
@@ -204,32 +209,45 @@ class _HomePageState extends State<HomePage> {
             future: busProvider.getListBus(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                String kode = "";
+
                 List<Bus> data = snapshot.data;
-
-                int index = 0;
-
-                return ListView(
-                  children: data.map((item) {
-                    index++;
-                    return Container(
-                      margin: EdgeInsets.only(
-                          // top: index == 1 ? 0 : 30,
-                          ),
-                      child: GestureDetector(
-                          onTap: () {
-                            Get.to(SeatPage(
-                                item.idbus,
-                                item.start,
-                                item.finish,
-                                item.nama,
-                                (item.time).substring(0, 5),
-                                item.date,
-                                item.price));
-                          },
-                          child: ItemTicket(item)),
-                    );
-                  }).toList(),
-                );
+                data.map((e) => kode = e.idbus).toList();
+                print(kode);
+                if (kode == null) {
+                  return Container(
+                    height: 100,
+                    width: 100,
+                    child: Center(
+                        child: LottieBuilder.asset("assets/loading.json")),
+                  );
+                } else {
+                  return ListView(
+                    children: data.map((item) {
+                      // if (item.idbus.toString() == "0") {
+                      //   return Container();
+                      // } else {
+                      return Container(
+                        margin: EdgeInsets.only(
+                            // top: index == 1 ? 0 : 30,
+                            ),
+                        child: GestureDetector(
+                            onTap: () {
+                              Get.to(SeatPage(
+                                  item.idbus,
+                                  item.start,
+                                  item.finish,
+                                  item.nama,
+                                  (item.time).substring(0, 5),
+                                  item.date,
+                                  item.price));
+                            },
+                            child: ItemTicket(item)),
+                      );
+                      // }
+                    }).toList(),
+                  );
+                }
               }
 
               return Center(

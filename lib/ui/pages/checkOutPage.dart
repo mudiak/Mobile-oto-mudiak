@@ -311,7 +311,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             height: 50,
                             width: double.infinity,
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  BusProvider.postCheckOut(
+                                      widget.idorder,
+                                      snapshot.data.toString(),
+                                      widget.seat,
+                                      widget.price.toString());
+                                },
                                 child: Text("Checkout Now",
                                     style: GoogleFonts.raleway(
                                         fontWeight: FontWeight.bold,
