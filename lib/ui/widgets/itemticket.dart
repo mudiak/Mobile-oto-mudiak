@@ -139,6 +139,26 @@ class ItemTicket extends StatelessWidget {
   }
 }
 
+class TicketBottomClipper extends CustomClipper<Path> {
+  double radius = 15;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.moveTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, radius);
+    path.quadraticBezierTo(size.width - radius, radius, size.width - radius, 0);
+    path.lineTo(radius, 0);
+    path.quadraticBezierTo(radius, radius, 0, radius);
+
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 // class ItemClipperatas extends CustomClipper<Path> {
 //   @override
 //   Path getClip(Size size) {
