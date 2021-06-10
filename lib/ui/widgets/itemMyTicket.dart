@@ -1,6 +1,9 @@
 part of 'widgets.dart';
 
 class ItemMyTicket extends StatefulWidget {
+  final Ticket ticket;
+  bool exprired;
+  ItemMyTicket(this.ticket, this.exprired);
   @override
   _ItemMyTicketState createState() => _ItemMyTicketState();
 }
@@ -41,7 +44,7 @@ class _ItemMyTicketState extends State<ItemMyTicket> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Sinamar",
+                        Text(widget.ticket.nama,
                             style: GoogleFonts.openSans(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -56,7 +59,7 @@ class _ItemMyTicketState extends State<ItemMyTicket> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("Limbanang",
+                            Text(widget.ticket.start,
                                 style: GoogleFonts.openSans(
                                     fontWeight: FontWeight.bold,
                                     color: "A4A4A4".toColor(),
@@ -73,7 +76,7 @@ class _ItemMyTicketState extends State<ItemMyTicket> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("Padang",
+                            Text(widget.ticket.finish,
                                 style: GoogleFonts.openSans(
                                     fontWeight: FontWeight.bold,
                                     color: "A4A4A4".toColor(),
@@ -86,17 +89,37 @@ class _ItemMyTicketState extends State<ItemMyTicket> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Sat 21, 06:00 ",
+                        Text(
+                            widget.ticket.date +
+                                ", " +
+                                widget.ticket.time.substring(0, 5),
                             style: GoogleFonts.openSans(
                                 fontWeight: FontWeight.w400,
                                 color: "A4A4A4".toColor(),
                                 fontSize: 15)),
-                        Text("#22081996",
-                            style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w400,
-                                color: "A4A4A4".toColor(),
-                                fontSize: 15)),
-                        Text("Rp. 100.000",
+                        (widget.exprired == false)
+                            ? Text(
+                                "#" + widget.ticket.id,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w400,
+                                  color: "A4A4A4".toColor(),
+                                  fontSize: 15,
+                                ),
+                              )
+                            : Text(
+                                "#" + widget.ticket.id,
+                                style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w400,
+                                    color: "A4A4A4".toColor(),
+                                    fontSize: 15,
+                                    decoration: TextDecoration.lineThrough),
+                              ),
+                        Text(
+                            NumberFormat.currency(
+                                    locale: 'id-ID',
+                                    symbol: 'Rp. ',
+                                    decimalDigits: 0)
+                                .format(widget.ticket.price),
                             style: GoogleFonts.openSans(
                                 fontWeight: FontWeight.w400,
                                 color: "A4A4A4".toColor(),

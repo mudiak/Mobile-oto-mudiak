@@ -119,7 +119,12 @@ class ItemTicket extends StatelessWidget {
                             Container(
                               child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text("RP. " + bus.price.toString(),
+                                  child: Text(
+                                      NumberFormat.currency(
+                                              locale: 'id-ID',
+                                              symbol: 'Rp. ',
+                                              decimalDigits: 0)
+                                          .format(bus.price),
                                       style: GoogleFonts.raleway(
                                           color: "A4A4A4".toColor(),
                                           fontWeight: FontWeight.w600))),

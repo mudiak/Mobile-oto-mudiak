@@ -1,1 +1,1 @@
-String url = "http://10.234.155.90/oto_mudiak/API/";
+String url = "http://192.168.0.102/oto_mudiak/API/";

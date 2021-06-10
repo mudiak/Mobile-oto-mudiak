@@ -231,7 +231,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             Container(
                               margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                               child: Text(
-                                "RP." + widget.price.toString() + " x 1",
+                                NumberFormat.currency(
+                                            locale: 'id-ID',
+                                            symbol: 'Rp. ',
+                                            decimalDigits: 0)
+                                        .format(widget.price) +
+                                    " x 1",
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, color: Colors.black),
                               ),
@@ -239,7 +244,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             Container(
                               margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                               child: Text(
-                                "Rp. " + (widget.price * 1).toString(),
+                                NumberFormat.currency(
+                                        locale: 'id-ID',
+                                        symbol: 'Rp. ',
+                                        decimalDigits: 0)
+                                    .format(widget.price),
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, color: Colors.black),
                               ),
@@ -277,7 +286,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   color = Colors.red;
                                   check = false;
                                 }
-                                return Text("Rp. " + snapshot.data.toString(),
+                                return Text(
+                                    NumberFormat.currency(
+                                            locale: 'id-ID',
+                                            symbol: 'Rp. ',
+                                            decimalDigits: 0)
+                                        .format(snapshot.data),
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 25,

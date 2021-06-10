@@ -50,7 +50,7 @@ class _MainPageState extends State<MainPage> {
               margin: EdgeInsets.only(bottom: 42),
               child: FloatingActionButton(
                 onPressed: () {
-                  pref.logout();
+                  Get.to(TopUpPage());
                 },
                 elevation: 0,
                 backgroundColor: "FBD460".toColor(),

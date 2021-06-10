@@ -1,0 +1,11 @@
+{
+    "workbench.preferredDarkColorTheme": "Default Light+",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Default Dark+",
+    "editor.cursorBlinking": "smooth",
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "editor.codeLensFontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "Fira Code"
+}

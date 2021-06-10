@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +10,12 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:oto_mudiak/model/bus.dart';
 import 'package:oto_mudiak/model/models.dart';
-import 'package:oto_mudiak/model/seat.dart';
 import 'package:oto_mudiak/provider/bus_provider.dart';
 import 'package:oto_mudiak/shared/services.dart';
 import 'package:oto_mudiak/shared/shared.dart';
 import 'package:oto_mudiak/ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:get/get.dart';
 
@@ -30,3 +28,4 @@ part 'historyPage.dart';
 part 'seatPage.dart';
 part 'checkOutPage.dart';
 part 'ticketDetailPage.dart';
+part 'topUpPage.dart';

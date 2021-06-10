@@ -6,9 +6,11 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  SharePreferencesHelper pref = SharePreferencesHelper();
   bool isExpriredTicket = false;
   @override
   Widget build(BuildContext context) {
+    var busProvider = Provider.of<BusProvider>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -50,11 +52,13 @@ class _HistoryPageState extends State<HistoryPage> {
                                 },
                                 child: Text("Newest",
                                     style: GoogleFonts.raleway(
-                                        color: !isExpriredTicket
+                                        color: isExpriredTicket
                                             ? Colors.white
-                                            : "C4C4C4".toColor(),
+                                            : "FBD460".toColor(),
                                         fontSize: 20,
-                                        fontWeight: FontWeight.w500)),
+                                        fontWeight: isExpriredTicket
+                                            ? FontWeight.w500
+                                            : FontWeight.bold)),
                               ),
                               SizedBox(
                                 height: 15,
@@ -78,10 +82,12 @@ class _HistoryPageState extends State<HistoryPage> {
                                 child: Text("Oldest",
                                     style: GoogleFonts.raleway(
                                         color: isExpriredTicket
-                                            ? Colors.white
-                                            : "C4C4C4".toColor(),
+                                            ? "FBD460".toColor()
+                                            : Colors.white,
                                         fontSize: 20,
-                                        fontWeight: FontWeight.w500)),
+                                        fontWeight: isExpriredTicket
+                                            ? FontWeight.bold
+                                            : FontWeight.w500)),
                               ),
                               SizedBox(
                                 height: 15,
@@ -103,32 +109,99 @@ class _HistoryPageState extends State<HistoryPage> {
             ],
           ),
           Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-                Container(
-                  child: ItemMyTicket(),
-                ),
-              ],
-            ),
-          ),
+              child: FutureBuilder(
+                  future: pref.getUsername(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return (isExpriredTicket == false)
+                        ? FutureBuilder(
+                            future: busProvider
+                                .getListTicketNow(snapshot.data.toString()),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                String kode = "";
+
+                                List<Ticket> data = snapshot.data;
+                                data.map((e) => kode = e.idbus).toList();
+                                print(kode);
+                                if (kode == null) {
+                                  return Container(
+                                    height: 100,
+                                    width: 100,
+                                    child: Center(
+                                        child: LottieBuilder.asset(
+                                            "assets/loading.json")),
+                                  );
+                                } else {
+                                  return ListView(
+                                    children: data.map((item) {
+                                      // if (item.idbus.toString() == "0") {
+                                      //   return Container();
+                                      // } else {
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            // top: index == 1 ? 0 : 30,
+                                            ),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              Get.to(TicketDetailPage(item.id));
+                                            },
+                                            child: ItemMyTicket(
+                                                item, isExpriredTicket)),
+                                      );
+                                      // }
+                                    }).toList(),
+                                  );
+                                }
+                              }
+
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          )
+                        : FutureBuilder(
+                            future: busProvider
+                                .getListTicketexpired(snapshot.data.toString()),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                String kode = "";
+
+                                List<Ticket> data = snapshot.data;
+                                data.map((e) => kode = e.idbus).toList();
+                                print(kode);
+                                if (kode == null) {
+                                  return Container(
+                                    height: 100,
+                                    width: 100,
+                                    child: Center(
+                                        child: LottieBuilder.asset(
+                                            "assets/loading.json")),
+                                  );
+                                } else {
+                                  return ListView(
+                                    children: data.map((item) {
+                                      // if (item.idbus.toString() == "0") {
+                                      //   return Container();
+                                      // } else {
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            // top: index == 1 ? 0 : 30,
+                                            ),
+                                        child: ItemMyTicket(
+                                            item, isExpriredTicket),
+                                      );
+                                      // }
+                                    }).toList(),
+                                  );
+                                }
+                              }
+
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                  })),
           SizedBox(
             height: 70,
           )

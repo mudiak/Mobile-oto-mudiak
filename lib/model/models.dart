@@ -5,3 +5,4 @@ import 'package:oto_mudiak/shared/services.dart';
 part 'registerModel.dart';
 part 'loginModel.dart';
 part 'detailTicket.dart';
+part 'ticket.dart';

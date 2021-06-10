@@ -59,7 +59,7 @@ class BusProvider extends ChangeNotifier {
 
     var jsonObject = json.decode(apiResult.body);
     print(jsonObject['response']);
-    Get.off(TicketDetailPage());
+    Get.off(TicketDetailPage(idorder));
     return jsonObject['response'];
   }
 
@@ -74,20 +74,35 @@ class BusProvider extends ChangeNotifier {
     return seat;
   }
 
-  // getDetailTicket(String idorder) async {
-  //   var result = await http
-  //       .get(Uri.parse(url + 'listBus.php?page=detail&idorder=' + idorder));
+  getListTicketNow(String username) async {
+    var result = await http.get(
+        Uri.parse(url + 'listBus.php?page=listticket&username=' + username));
 
-  //   print(result.statusCode);
-  //   print(result.body);
+    print(result.statusCode);
+    print(result.body);
 
-  //   if (result.statusCode == 200) {
-  //     List data = jsonDecode(result.body);
-  //     List<DetailTicket> detailticket =
-  //         data.map((item) => DetailTicket.fromJson(item)).toList();
-  //     return detailticket;
-  //   } else {
-  //     return <DetailTicket>[];
-  //   }
-  // }
+    if (result.statusCode == 200) {
+      List data = jsonDecode(result.body);
+      List<Ticket> ticket = data.map((item) => Ticket.fromJson(item)).toList();
+      return ticket;
+    } else {
+      return <Ticket>[];
+    }
+  }
+
+  getListTicketexpired(String username) async {
+    var result = await http.get(Uri.parse(
+        url + 'listBus.php?page=listticketexpired&username=' + username));
+
+    print(result.statusCode);
+    print(result.body);
+
+    if (result.statusCode == 200) {
+      List data = jsonDecode(result.body);
+      List<Ticket> ticket = data.map((item) => Ticket.fromJson(item)).toList();
+      return ticket;
+    } else {
+      return <Ticket>[];
+    }
+  }
 }
