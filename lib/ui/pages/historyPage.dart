@@ -126,10 +126,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                 if (kode == null) {
                                   return Container(
                                     height: 100,
-                                    width: 100,
+                                    width: 200,
                                     child: Center(
-                                        child: LottieBuilder.asset(
-                                            "assets/loading.json")),
+                                        child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        LottieBuilder.asset("assets/data.json"),
+                                      ],
+                                    )),
                                   );
                                 } else {
                                   return ListView(
@@ -172,10 +177,16 @@ class _HistoryPageState extends State<HistoryPage> {
                                 if (kode == null) {
                                   return Container(
                                     height: 100,
-                                    width: 100,
+                                    width: 200,
                                     child: Center(
-                                        child: LottieBuilder.asset(
-                                            "assets/loading.json")),
+                                        child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        LottieBuilder.asset("assets/data.json"),
+                                        Text("Data Is Empty")
+                                      ],
+                                    )),
                                   );
                                 } else {
                                   return ListView(
@@ -197,8 +208,8 @@ class _HistoryPageState extends State<HistoryPage> {
                               }
 
                               return Center(
-                                child: CircularProgressIndicator(),
-                              );
+                                  child: LottieBuilder.asset(
+                                      "assets/loading.json"));
                             },
                           );
                   })),

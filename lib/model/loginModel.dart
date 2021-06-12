@@ -30,13 +30,13 @@ class LoginModel {
   }
   static Future<LoginModel> connectToAPI(
       String emailoruser, String password) async {
-    var apiURL = Uri.parse(url + "/login.php");
+    var apiURL = Uri.parse(url + "login.php");
 
     var apiResult = await http
         .post(apiURL, body: {"username": emailoruser, "password": password});
 
     var jsonObject = json.decode(apiResult.body);
-
+    print(jsonObject);
     return LoginModel.loginCustomer(jsonObject);
   }
 }

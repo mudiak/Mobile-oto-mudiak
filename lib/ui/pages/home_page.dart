@@ -11,6 +11,8 @@ class _HomePageState extends State<HomePage> {
   String pathPicture = "jsjs";
 
   int balance = 0;
+  int jum = 0;
+  String lokasi;
 
   SharePreferencesHelper pref = SharePreferencesHelper();
 
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       getName();
       getPathPicture();
+      lokasi = null;
     });
   }
 
@@ -61,36 +64,51 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         child: Stack(
                           children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Colors.white, width: 2.5),
-                                ),
+                            Center(
+                              child: Container(
+                                  height: 100,
+                                  child: Center(
+                                      child: LottieBuilder.asset(
+                                          "assets/borderprofile.json"))),
+                            ),
+                            Center(
+                              child: Container(
+                                margin: EdgeInsets.only(left: 7),
                                 child: FutureBuilder(
                                     future: getPathPicture(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       {
-                                        return Container(
-                                          margin: EdgeInsets.all(5),
-                                          width: 50,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: NetworkImage((snapshot
-                                                        .hasData)
-                                                    ? url +
-                                                        "" +
-                                                        snapshot.data.toString()
-                                                    // url + "" + pathPicture
-                                                    : "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg"),
-                                                fit: BoxFit.cover,
-                                              )),
+                                        return Center(
+                                          child: InkWell(
+                                            onTap: () {
+                                              Get.to(SettingPage());
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.all(5),
+                                              width: 75,
+                                              height: 75,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: (snapshot.hasData)
+                                                        ? NetworkImage(url +
+                                                                "" +
+                                                                snapshot.data
+                                                                    .toString()
+                                                            // url + "" + pathPicture
+                                                            )
+                                                        : AssetImage(
+                                                            "assets/user_pict.png"),
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                            ),
+                                          ),
                                         );
                                       }
-                                    }))
+                                    }),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -109,8 +127,14 @@ class _HomePageState extends State<HomePage> {
                                         future: busProvider.getNama(nama),
                                         builder: (BuildContext context,
                                             AsyncSnapshot snapshot) {
+                                          jum = snapshot.data.length;
+
                                           return Text(
-                                            snapshot.data.toString(),
+                                            (jum > 18)
+                                                ? snapshot.data
+                                                    .toString()
+                                                    .substring(0, 18)
+                                                : snapshot.data.toString(),
                                             style: GoogleFonts.raleway(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.w500,
@@ -183,19 +207,27 @@ class _HomePageState extends State<HomePage> {
               height: 6,
             ),
             Container(
-              padding: EdgeInsets.all(5),
-              height: 50,
-              child: DropdownSearch<String>(
-                mode: Mode.BOTTOM_SHEET,
-                popupBarrierColor: Colors.grey,
-                showSelectedItem: true,
-                items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada'],
-                hint: "country in menu mode",
-                popupItemDisabled: (String s) => s.startsWith('I'),
-                onChanged: print,
-                selectedItem: "Search ",
-              ),
-            ),
+                padding: EdgeInsets.all(5),
+                height: 50,
+                child: FutureBuilder(
+                    future: busProvider.getListLokasi(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      List<Lokasi> data = snapshot.data;
+                      return DropdownSearch<String>(
+                        mode: Mode.MENU,
+                        popupBarrierColor: Colors.grey,
+                        showSelectedItem: true,
+                        items: ['Limbanang', 'Padang', 'Pekanbaru'],
+                        hint: "country in menu mode",
+                        popupItemDisabled: (String s) => s.startsWith('I'),
+                        onChanged: (String s) {
+                          lokasi = s;
+                          print(s);
+                          setState(() {});
+                        },
+                        selectedItem: "Search ",
+                      );
+                    })),
             Container(
               height: 35,
               margin: EdgeInsets.fromLTRB(40, 10, 40, 0),
@@ -223,7 +255,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: FutureBuilder(
-                future: busProvider.getListBus(),
+                future: (lokasi == null)
+                    ? busProvider.getListBus()
+                    : busProvider.getListBusLokasi(lokasi),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     String kode = "";
@@ -234,9 +268,14 @@ class _HomePageState extends State<HomePage> {
                     if (kode == null) {
                       return Container(
                         height: 100,
-                        width: 100,
+                        width: double.infinity,
                         child: Center(
-                            child: LottieBuilder.asset("assets/loading.json")),
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            LottieBuilder.asset("assets/data.json"),
+                          ],
+                        )),
                       );
                     } else {
                       return ListView(

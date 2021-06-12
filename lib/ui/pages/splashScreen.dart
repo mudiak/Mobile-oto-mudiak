@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
 
     super.initState();
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 3), () {
       Future<String> authToken = pref.getEmail();
       authToken.then((data) {
         if (data == null) {

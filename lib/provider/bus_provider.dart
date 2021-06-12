@@ -25,6 +25,22 @@ class BusProvider extends ChangeNotifier {
     }
   }
 
+  getListBusLokasi(String lokasi) async {
+    var result = await http.get(
+        Uri.parse(url + 'listBus.php?page=listcarilokasi&lokasi=' + lokasi));
+
+    print(result.statusCode);
+    print(result.body);
+
+    if (result.statusCode == 200) {
+      List data = jsonDecode(result.body);
+      List<Bus> bus = data.map((item) => Bus.fromJson(item)).toList();
+      return bus;
+    } else {
+      return <Bus>[];
+    }
+  }
+
   getWallet(String username) async {
     var result = await http
         .get(Uri.parse(url + 'customers.php?page=wallet&username=' + username));
@@ -70,6 +86,7 @@ class BusProvider extends ChangeNotifier {
     print(result.statusCode);
     print(result.body);
     List data = jsonDecode(result.body);
+
     List<Seat> seat = data.map((item) => Seat.fromJson(item)).toList();
     return seat;
   }
@@ -104,5 +121,29 @@ class BusProvider extends ChangeNotifier {
     } else {
       return <Ticket>[];
     }
+  }
+
+  getListLokasi() async {
+    var result = await http.get(Uri.parse(url + 'listBus.php?page=listlokasi'));
+
+    print(result.statusCode);
+    print(result.body);
+
+    if (result.statusCode == 200) {
+      List data = jsonDecode(result.body);
+      List<Lokasi> lokasi = data.map((item) => Lokasi.fromJson(item)).toList();
+      return lokasi;
+    } else {
+      return <Lokasi>[];
+    }
+  }
+}
+
+class Lokasi {
+  String start_address;
+  Lokasi(this.start_address);
+
+  Lokasi.fromJson(json) {
+    start_address = json['start_address'];
   }
 }

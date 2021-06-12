@@ -309,17 +309,35 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         if (int.parse(snapshot.data) <= widget.price) {
                           print(int.parse(snapshot.data));
                           print("Rp." + widget.price.toString());
-                          return Container(
-                            margin: EdgeInsets.all(30),
-                            height: 50,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                // onPressed: () {},
-                                child: Text("Checkout Now",
-                                    style: GoogleFonts.raleway(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.white))),
+                          return Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(30, 30, 30, 10),
+                                height: 50,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    // onPressed: () {},
+                                    child: Text("Checkout Now",
+                                        style: GoogleFonts.raleway(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white))),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(30, 0, 30, 30),
+                                height: 50,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.off(TopUpPage());
+                                    },
+                                    child: Text("Top Up",
+                                        style: GoogleFonts.raleway(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white))),
+                              ),
+                            ],
                           );
                         } else if (int.parse(snapshot.data) == widget.price) {
                           return Container(

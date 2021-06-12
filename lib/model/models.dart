@@ -6,3 +6,4 @@ part 'registerModel.dart';
 part 'loginModel.dart';
 part 'detailTicket.dart';
 part 'ticket.dart';
+part 'editModel.dart';
