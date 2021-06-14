@@ -98,25 +98,25 @@ class _SeatPageState extends State<SeatPage> {
                         future: busProvider.getListSeat(widget.idorder),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
-                          List<Seat> data = snapshot.data;
-                          seatpakai = data.map((e) => e.seat).toList();
-                          print(seatpakai);
-                          // print(seatpakai);
-                          // print("jdsfhskjdhfkjsd" + data.toString());
-                          // print(seatpakai.contains("A1"));
-                          return Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20)),
-                                color: Colors.white),
-                            child: ListView(
-                              children: [
-                                SizedBox(
-                                  height: 25,
-                                ),
-                                Expanded(
-                                  child: Container(
+                          if (snapshot.hasData) {
+                            List<Seat> data = snapshot.data;
+                            seatpakai = data.map((e) => e.seat).toList();
+                            print(seatpakai);
+                            // print(seatpakai);
+                            // print("jdsfhskjdhfkjsd" + data.toString());
+                            // print(seatpakai.contains("A1"));
+                            return Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20)),
+                                  color: Colors.white),
+                              child: ListView(
+                                children: [
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Container(
                                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                     child: Row(
                                       mainAxisAlignment:
@@ -171,603 +171,659 @@ class _SeatPageState extends State<SeatPage> {
                                       ],
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/frontbus.png"))),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(80, 10, 80, 10),
-                                  height: 400,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("A1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "A1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("A1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "A1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("A1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("A2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "A2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("A2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "A2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("A2")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 2,
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: Container()),
-                                                    Expanded(
-                                                        flex: 3,
-                                                        child: Container(
-                                                          margin:
-                                                              EdgeInsets.all(5),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .white),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  color: (seatpakai
-                                                                          .contains(
-                                                                              "SP"))
-                                                                      ? "2D9CDB"
-                                                                          .toColor()
-                                                                      : (seatChoise ==
-                                                                              "SP")
-                                                                          ? "2D9CDB"
-                                                                              .toColor()
-                                                                          : "2D9CDB"
-                                                                              .toColor()),
-                                                          child: Center(
-                                                              child: Text(
-                                                            "SP",
-                                                            style: GoogleFonts
-                                                                .raleway(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .white),
-                                                          )),
-                                                        )),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: Container()),
-                                                  ],
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("B1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "B1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("B1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "B1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("B1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("B2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "B2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("B2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "B2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("B2")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("B3"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "B3";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("B3"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "B3")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("B3")),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("C1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "C1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("C1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "C1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("C1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("C2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "C2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("C2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "C2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("C2")),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("D1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "D1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("D1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "D1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("D1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("D2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "D2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("D2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "D2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("D2")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("D3"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "D3";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("D3"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "D3")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("D3")),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("E1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "E1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("E1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "E1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("E1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("E2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "E2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("E2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "E2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("E2")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("E3"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "E3";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("E3"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "E3")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("E3")),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("F1"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "F1";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("F1"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "F1")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("F1")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("F2"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "F2";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("F2"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "F2")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("F2")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("F3"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "F3";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("F3"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "F3")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("F3")),
-                                                  ),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    (seatpakai.contains("F4"))
-                                                        ? setState(() {})
-                                                        : setState(() {
-                                                            seatChoise = "F4";
-                                                          });
-                                                  },
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: (seatpakai
-                                                                .contains("F4"))
-                                                            ? "D3CDCD".toColor()
-                                                            : (seatChoise ==
-                                                                    "F4")
-                                                                ? Colors.amber
-                                                                : Colors.white),
-                                                    child: Center(
-                                                        child: Text("F4")),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/frontbus.png"))),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(80, 10, 80, 10),
+                                    height: 400,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("A1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "A1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "A1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "A1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("A1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("A2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "A2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "A2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "A2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("A2")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                      Expanded(
+                                                          flex: 3,
+                                                          child: Container(
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    5),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: Colors
+                                                                            .white),
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                8),
+                                                                    color: (seatpakai.contains(
+                                                                            "SP"))
+                                                                        ? "2D9CDB"
+                                                                            .toColor()
+                                                                        : (seatChoise ==
+                                                                                "SP")
+                                                                            ? "2D9CDB".toColor()
+                                                                            : "2D9CDB".toColor()),
+                                                            child: Center(
+                                                                child: Text(
+                                                              "SP",
+                                                              style: GoogleFonts.raleway(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .white),
+                                                            )),
+                                                          )),
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                    ],
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("B1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "B1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "B1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "B1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("B1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("B2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "B2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "B2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "B2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("B2")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("B3"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "B3";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "B3"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "B3")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("B3")),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("C1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "C1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "C1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "C1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("C1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("C2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "C2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "C2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "C2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("C2")),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("D1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "D1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "D1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "D1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("D1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("D2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "D2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "D2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "D2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("D2")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("D3"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "D3";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "D3"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "D3")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("D3")),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("E1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "E1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "E1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "E1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("E1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("E2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "E2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "E2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "E2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("E2")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("E3"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "E3";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "E3"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "E3")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("E3")),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("F1"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "F1";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "F1"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "F1")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("F1")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("F2"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "F2";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "F2"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "F2")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("F2")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("F3"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "F3";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "F3"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "F3")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("F3")),
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      (seatpakai.contains("F4"))
+                                                          ? setState(() {})
+                                                          : setState(() {
+                                                              seatChoise = "F4";
+                                                            });
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: (seatpakai
+                                                                  .contains(
+                                                                      "F4"))
+                                                              ? "D3CDCD"
+                                                                  .toColor()
+                                                              : (seatChoise ==
+                                                                      "F4")
+                                                                  ? Colors.amber
+                                                                  : Colors
+                                                                      .white),
+                                                      child: Center(
+                                                          child: Text("F4")),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Center(
+                              child: Container(
+                                height: 100,
+                                child:
+                                    LottieBuilder.asset("assets/loading.json"),
+                              ),
+                            );
+                          }
                         }),
                     (seatChoise != null)
                         ? Align(

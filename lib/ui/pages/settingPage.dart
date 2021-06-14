@@ -39,23 +39,33 @@ class SettingPage extends StatelessWidget {
                           future: pref.getPathPicture(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
-                            print(snapshot.data);
-                            return Container(
-                                margin: EdgeInsets.all(5),
-                                width: 125,
-                                height: 125,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: (snapshot.hasData)
-                                          ? NetworkImage(url +
-                                                  "" +
-                                                  snapshot.data.toString()
-                                              // url + "" + pathPicture
-                                              )
-                                          : AssetImage("assets/user_pict.png"),
-                                      fit: BoxFit.cover,
-                                    )));
+                            if (snapshot.hasData) {
+                              return Container(
+                                  margin: EdgeInsets.all(5),
+                                  width: 125,
+                                  height: 125,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: (snapshot.hasData)
+                                            ? NetworkImage(url +
+                                                    "" +
+                                                    snapshot.data.toString()
+                                                // url + "" + pathPicture
+                                                )
+                                            : AssetImage(
+                                                "assets/user_pict.png"),
+                                        fit: BoxFit.cover,
+                                      )));
+                            } else {
+                              return Center(
+                                child: Container(
+                                  height: 100,
+                                  child: LottieBuilder.asset(
+                                      "assets/loading.json"),
+                                ),
+                              );
+                            }
                           }),
                       SizedBox(
                         height: 20,
@@ -69,12 +79,22 @@ class SettingPage extends StatelessWidget {
                                     future: busProvider.getNama(snapshot.data),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snap) {
-                                      return Text(
-                                        snap.data,
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w500),
-                                      );
+                                      if (snap.hasData) {
+                                        return Text(
+                                          snap.data,
+                                          style: GoogleFonts.raleway(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w500),
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: Container(
+                                            height: 50,
+                                            child: LottieBuilder.asset(
+                                                "assets/loading.json"),
+                                          ),
+                                        );
+                                      }
                                     });
                               })),
                       SizedBox(
@@ -85,11 +105,20 @@ class SettingPage extends StatelessWidget {
                               future: pref.getUsername(),
                               builder:
                                   (BuildContext context, AsyncSnapshot snap) {
-                                return Text("Username : " + snap.data,
+                                if (snap.hasData) {
+                                  return Text("Username : " + snap.data,
+                                      style: GoogleFonts.raleway(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey));
+                                } else {
+                                  return Text(
+                                    "--",
                                     style: GoogleFonts.raleway(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey));
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w500),
+                                  );
+                                }
                               })),
                     ],
                   ),
@@ -146,39 +175,44 @@ class SettingPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 20),
-                            height: 35,
-                            child: Image.asset("assets/key.png"),
-                          ),
-                          SizedBox(
-                            width: 30,
-                          ),
-                          Text("Ganti Password",
-                              style: GoogleFonts.raleway(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black)),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.all(5),
-                          child: DottedLine(
-                            dashColor: "E4E4E4".toColor(),
-                            lineThickness: 2.5,
-                          )),
-                    ],
+                InkWell(
+                  onTap: () {
+                    Get.to(GantiPasswordPage());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 20),
+                              height: 35,
+                              child: Image.asset("assets/key.png"),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text("Ganti Password",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black)),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.all(5),
+                            child: DottedLine(
+                              dashColor: "E4E4E4".toColor(),
+                              lineThickness: 2.5,
+                            )),
+                      ],
+                    ),
                   ),
                 ),
                 InkWell(

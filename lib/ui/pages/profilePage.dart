@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
         editModel = value;
         pref.setEmail(editModel.email);
         pref.setPathPicture(editModel.pathPicture);
+        pref.setName(editModel.name);
         Get.offAll(MainPage());
       });
     } catch (e) {
@@ -64,6 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    ProgressDialog pr = new ProgressDialog(context, showLogs: true);
+    pr.style(message: 'Please wait...');
     var busProvider = Provider.of<BusProvider>(context);
     return Scaffold(
         body: Column(children: [
@@ -317,6 +320,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Container(
                         child: RaisedButton(
                           onPressed: () {
+                            pr.show();
                             (uploadimage == null)
                                 // print(fullNameController.text);
                                 // print(emailController.text);
@@ -331,6 +335,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     editModel = value;
                                     pref.setEmail(editModel.email);
                                     pref.setPathPicture(editModel.pathPicture);
+                                    pref.setName(editModel.name);
+
                                     Get.offAll(MainPage());
                                   })
                                 : uploadImage(username, fullNameController.text,

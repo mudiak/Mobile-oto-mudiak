@@ -11,8 +11,11 @@ class _SignInPageState extends State<SignInPage> {
   SharePreferencesHelper pref = SharePreferencesHelper();
   LoginModel loginModel = null;
   bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
+    ProgressDialog pr = new ProgressDialog(context, showLogs: true);
+    pr.style(message: 'Please wait...');
     return Scaffold(
       backgroundColor: "F6F7F9".toColor(),
       body: SafeArea(
@@ -130,37 +133,44 @@ class _SignInPageState extends State<SignInPage> {
                     //   wallet = value;
                     //   print(wallet.wallet);
                     // }),
-                    onTap: () => LoginModel.connectToAPI(
-                            usernameController.text, passwordController.text)
-                        .then((value) {
-                      loginModel = value;
-                      print(loginModel.wallet);
-                      print(pref.getEmail());
-                      if (loginModel.kode == 1) {
-                        pref.setEmail(loginModel.email);
-                        pref.setUsername(loginModel.username);
-                        pref.setWallet(loginModel.wallet);
-                        pref.setPathPicture(loginModel.pathPicture);
-                        Get.offAll(MainPage());
-                      } else {
-                        Get.snackbar("", "",
-                            backgroundColor: "F6C30E".toColor(),
-                            icon: Icon(
-                              Icons.info_rounded,
-                              color: Colors.white,
-                            ),
-                            titleText: Text(
-                              "Warning",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            messageText: Text(
-                              loginModel.response,
-                              style: GoogleFonts.poppins(color: Colors.white),
-                            ));
-                      }
-                    }),
+                    onTap: () {
+                      pr.show();
+                      LoginModel.connectToAPI(
+                              usernameController.text, passwordController.text)
+                          .then((value) {
+                        loginModel = value;
+                        print(loginModel.wallet);
+                        print(pref.getEmail());
+                        if (loginModel.kode == 1) {
+                          pr.hide();
+                          pref.setEmail(loginModel.email);
+                          pref.setUsername(loginModel.username);
+                          pref.setWallet(loginModel.username);
+                          pref.setName(loginModel.name);
+                          pref.setPathPicture(loginModel.pathPicture);
+                          Get.offAll(MainPage());
+                        } else if (loginModel.kode == 101) {
+                          pr.hide();
+                          Get.snackbar("", "",
+                              backgroundColor: "F6C30E".toColor(),
+                              icon: Icon(
+                                Icons.info_rounded,
+                                color: Colors.white,
+                              ),
+                              titleText: Text(
+                                "Warning",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              messageText: Text(
+                                loginModel.response,
+                                style: GoogleFonts.poppins(color: Colors.white),
+                              ));
+                        }
+                      });
+                    },
+
                     child: Container(
                       height: 65,
                       width: 65,

@@ -6,6 +6,7 @@ class SharePreferencesHelper {
   final String username = "username";
   final String wallet = "wallet";
   final String pathPicture = "pathPicture";
+  final String name = "nama";
 
   Future<void> setLogin(bool isLogin) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,8 +34,15 @@ class SharePreferencesHelper {
     return email;
   }
 
-  Future<void> setWallet(int wallet) async {
+  Future<void> setWallet(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var result = await http
+        .get(Uri.parse(url + 'customers.php?page=wallet&username=' + username));
+    var data = jsonDecode(result.body);
+    print(result.body);
+    print(username);
+    int wallet = int.parse(data['balance']);
+
     prefs.setInt(this.wallet, wallet);
   }
 
@@ -42,7 +50,7 @@ class SharePreferencesHelper {
   Future<int> getWallet() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int wallet;
-    wallet = pref.getInt(this.wallet) ?? 0;
+    wallet = pref.getInt(this.wallet) ?? 1000;
     return wallet;
   }
 
@@ -71,6 +79,18 @@ class SharePreferencesHelper {
     pathPicture = pref.getString(this.pathPicture) ??
         "https://www.profilepicture7.com//bao/bao_haokan/1/1634803414.jpg";
     return pathPicture;
+  }
+
+  Future<String> getName() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String name;
+    name = pref.getString(this.name) ?? "No Name";
+    return name;
+  }
+
+  Future<void> setName(String name) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.name, name);
   }
 
   Future<String> logout() async {

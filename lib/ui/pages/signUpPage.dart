@@ -19,8 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
   File uploadimage; //variable for choosed file
 
   Future<void> chooseImage() async {
-    var choosedimage =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    var choosedimage = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 50);
     //set source: ImageSource.camera to get image from camera
     setState(() {
       // Do something with the file
@@ -57,46 +57,48 @@ class _SignUpPageState extends State<SignUpPage> {
           print(jsondata["msg"]);
           //if error return from server, show message from server
         } else {
-          print("Upload successful");
-          RegisterModel.connectToAPI(id_customer, name, email, password)
-              .then((value) {
-            registesModel = value;
-            if (registesModel.kode == 1) {
-              Get.back();
-              Get.snackbar("", "",
-                  backgroundColor: "2D9CDB".toColor(),
-                  icon: Icon(
-                    Icons.check_circle_sharp,
-                    color: Colors.white,
-                  ),
-                  titleText: Text(
-                    "Sign Up Success",
-                    style: GoogleFonts.poppins(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                  messageText: Text(
-                    "Please login to order tickets",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                  ));
-            } else {
-              load = false;
-              Get.snackbar("", "",
-                  backgroundColor: "D9435E".toColor(),
-                  icon: Icon(
-                    Icons.info_outline,
-                    color: Colors.white,
-                  ),
-                  titleText: Text(
-                    "Failed",
-                    style: GoogleFonts.poppins(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                  messageText: Text(
-                    "Failed to Register",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                  ));
-            }
-            setState(() {});
+          setState(() {
+            print("Upload successful");
+            RegisterModel.connectToAPI(id_customer, name, email, password)
+                .then((value) {
+              registesModel = value;
+              if (registesModel.kode == 1) {
+                Get.back();
+
+                Get.snackbar("", "",
+                    backgroundColor: "2D9CDB".toColor(),
+                    icon: Icon(
+                      Icons.check_circle_sharp,
+                      color: Colors.white,
+                    ),
+                    titleText: Text(
+                      "Sign Up Success",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontWeight: FontWeight.w600),
+                    ),
+                    messageText: Text(
+                      "Please login to order tickets",
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ));
+              } else {
+                load = false;
+                Get.snackbar("", "",
+                    backgroundColor: "D9435E".toColor(),
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: Colors.white,
+                    ),
+                    titleText: Text(
+                      "Failed",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontWeight: FontWeight.w600),
+                    ),
+                    messageText: Text(
+                      "Failed to Register",
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ));
+              }
+            });
           });
         }
       } else {
@@ -114,6 +116,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    ProgressDialog pr = new ProgressDialog(context, showLogs: true);
+    pr.style(message: 'Please wait...');
+    if (pr.hide() == true) {
+      Get.back();
+    }
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -338,30 +345,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (usernameController.text == "" ||
-                          fullNameController.text == "" ||
-                          emailController.text == "" ||
-                          passwordController.text == "" ||
-                          confirmPasswordController.text == "") {
-                        Get.snackbar("", "",
-                            backgroundColor: "F6C30E".toColor(),
-                            icon: Icon(
-                              Icons.info_rounded,
-                              color: Colors.white,
-                            ),
-                            titleText: Text(
-                              "Warning",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            messageText: Text(
-                              "Field Cannot Be Empty",
-                              style: GoogleFonts.poppins(color: Colors.white),
-                            ));
-                      } else {
-                        if (passwordController.text !=
-                            confirmPasswordController.text) {
+                      setState(() {
+                        pr.show();
+                        print(load);
+                        if (usernameController.text == "" ||
+                            fullNameController.text == "" ||
+                            emailController.text == "" ||
+                            passwordController.text == "" ||
+                            confirmPasswordController.text == "") {
+                          setState(() {
+                            load = false;
+                          });
                           Get.snackbar("", "",
                               backgroundColor: "F6C30E".toColor(),
                               icon: Icon(
@@ -375,18 +369,59 @@ class _SignUpPageState extends State<SignUpPage> {
                                     fontWeight: FontWeight.w600),
                               ),
                               messageText: Text(
-                                "Password with Confirm Password is not valid",
+                                "Field Cannot Be Empty",
                                 style: GoogleFonts.poppins(color: Colors.white),
                               ));
                         } else {
-                          uploadImage(
-                              usernameController.text,
-                              fullNameController.text,
-                              emailController.text,
-                              passwordController.text);
-                          load = true;
+                          setState(() {
+                            load = false;
+                          });
+                          if (passwordController.text !=
+                              confirmPasswordController.text) {
+                            Get.snackbar("", "",
+                                backgroundColor: "F6C30E".toColor(),
+                                icon: Icon(
+                                  Icons.info_rounded,
+                                  color: Colors.white,
+                                ),
+                                titleText: Text(
+                                  "Warning",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                messageText: Text(
+                                  "Password with Confirm Password is not valid",
+                                  style:
+                                      GoogleFonts.poppins(color: Colors.white),
+                                ));
+                          } else if (uploadimage == null) {
+                            Get.snackbar("", "",
+                                backgroundColor: "F6C30E".toColor(),
+                                icon: Icon(
+                                  Icons.info_rounded,
+                                  color: Colors.white,
+                                ),
+                                titleText: Text(
+                                  "Warning",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                messageText: Text(
+                                  "Picture is Empty",
+                                  style:
+                                      GoogleFonts.poppins(color: Colors.white),
+                                ));
+                          } else {
+                            uploadImage(
+                                usernameController.text,
+                                fullNameController.text,
+                                emailController.text,
+                                passwordController.text);
+                          }
                         }
-                      }
+                      });
                     },
                     child: (load == false)
                         ? Container(

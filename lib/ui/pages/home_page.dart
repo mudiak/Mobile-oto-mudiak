@@ -6,7 +6,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String nama;
+  String nama = "--";
 
   String pathPicture = "jsjs";
 
@@ -33,9 +33,12 @@ class _HomePageState extends State<HomePage> {
 
   Future<Null> refresh() async {
     await Future.delayed(Duration(seconds: 1));
+    String username = await pref.getUsername();
+
     setState(() {
       getName();
       getPathPicture();
+      pref.setWallet(username);
       lokasi = null;
     });
   }
@@ -78,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                                     future: getPathPicture(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
-                                      {
+                                      if (snapshot.hasData) {
                                         return Center(
                                           child: InkWell(
                                             onTap: () {
@@ -105,6 +108,14 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                         );
+                                      } else {
+                                        return Container(
+                                          margin: EdgeInsets.all(5),
+                                          height: 75,
+                                          width: 75,
+                                          child: Image.asset(
+                                              "assets/user_pict.png"),
+                                        );
                                       }
                                     }),
                               ),
@@ -119,28 +130,21 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             FutureBuilder(
-                                future: getName(),
+                                future: pref.getName(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot snapshot) {
-                                  if (snapshot.hasData) {
-                                    return FutureBuilder(
-                                        future: busProvider.getNama(nama),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot) {
-                                          jum = snapshot.data.length;
+                                  if (snapshot.data != null) {
+                                    jum = snapshot.data.length;
 
-                                          return Text(
-                                            (jum > 18)
-                                                ? snapshot.data
-                                                    .toString()
-                                                    .substring(0, 18)
-                                                : snapshot.data.toString(),
-                                            style: GoogleFonts.raleway(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white),
-                                          );
-                                        });
+                                    return Text(
+                                      (jum > 18)
+                                          ? snapshot.data.substring(0, 18)
+                                          : snapshot.data.toString(),
+                                      style: GoogleFonts.raleway(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    );
                                   } else {
                                     return CircularProgressIndicator();
                                   }
@@ -148,53 +152,28 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(
                               height: 6,
                             ),
-                            (nama != null)
-                                ? FutureBuilder(
-                                    future: busProvider.getWallet(nama),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      pref.setWallet(
-                                          int.parse(snapshot.data.toString()));
-                                      if (snapshot.hasData) {
-                                        balance =
-                                            int.parse(snapshot.data.toString());
-                                        return Text(
-                                          NumberFormat.currency(
-                                                  locale: 'id-ID',
-                                                  symbol: 'Rp. ',
-                                                  decimalDigits: 0)
-                                              .format(balance),
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        );
-                                      } else {
-                                        return CircularProgressIndicator();
-                                      }
-                                    })
-                                : FutureBuilder(
-                                    future: getWallet(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData) {
-                                        balance =
-                                            int.parse(snapshot.data.toString());
-                                        return Text(
-                                          NumberFormat.currency(
-                                                  locale: 'id-ID',
-                                                  symbol: 'Rp. ',
-                                                  decimalDigits: 0)
-                                              .format(balance),
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        );
-                                      } else {
-                                        return CircularProgressIndicator();
-                                      }
-                                    })
+                            FutureBuilder(
+                                future: getWallet(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.hasData) {
+                                    balance =
+                                        int.parse(snapshot.data.toString());
+                                    return Text(
+                                      NumberFormat.currency(
+                                              locale: 'id-ID',
+                                              symbol: 'Rp. ',
+                                              decimalDigits: 0)
+                                          .format(balance),
+                                      style: GoogleFonts.openSans(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                })
                           ],
                         ),
                       ),
@@ -268,12 +247,17 @@ class _HomePageState extends State<HomePage> {
                     if (kode == null) {
                       return Container(
                         height: 100,
-                        width: double.infinity,
+                        width: 200,
                         child: Center(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             LottieBuilder.asset("assets/data.json"),
+                            Text("Data Is Empty",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.lightBlue))
                           ],
                         )),
                       );
@@ -306,9 +290,14 @@ class _HomePageState extends State<HomePage> {
                     }
                   }
 
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return RefreshIndicator(
+                      onRefresh: refresh,
+                      child: Center(
+                        child: Container(
+                          height: 100,
+                          child: LottieBuilder.asset("assets/loading.json"),
+                        ),
+                      ));
                 },
               ),
             ),

@@ -42,6 +42,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
   @override
   Widget build(BuildContext context) {
+    ProgressDialog pr = new ProgressDialog(context, showLogs: true);
+    pr.style(message: 'Please wait...');
     var busProvider = Provider.of<BusProvider>(context);
     return FutureBuilder(
         future: pref.getUsername(),
@@ -306,93 +308,79 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   FutureBuilder(
                       future: busProvider.getWallet(snap.data.toString()),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (int.parse(snapshot.data) <= widget.price) {
-                          print(int.parse(snapshot.data));
-                          print("Rp." + widget.price.toString());
-                          return Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(30, 30, 30, 10),
-                                height: 50,
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    // onPressed: () {},
-                                    child: Text("Checkout Now",
-                                        style: GoogleFonts.raleway(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: Colors.white))),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(30, 0, 30, 30),
-                                height: 50,
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      Get.off(TopUpPage());
-                                    },
-                                    child: Text("Top Up",
-                                        style: GoogleFonts.raleway(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: Colors.white))),
-                              ),
-                            ],
-                          );
-                        } else if (int.parse(snapshot.data) == widget.price) {
-                          return Container(
-                            margin: EdgeInsets.all(30),
-                            height: 50,
-                            width: double.infinity,
-                            child: Column(
+                        if (snapshot.hasData) {
+                          if (int.parse(snapshot.data) <= widget.price) {
+                            print(int.parse(snapshot.data));
+                            print("Rp." + widget.price.toString());
+                            return Column(
                               children: [
-                                ElevatedButton(
-                                    onPressed: () {
-                                      BusProvider.postCheckOut(
-                                          "" +
-                                              widget.idorder +
-                                              "" +
-                                              snap.data.toString() +
-                                              "" +
-                                              widget.seat,
-                                          widget.idorder,
-                                          snap.data.toString(),
-                                          widget.seat,
-                                          widget.price.toString());
-                                    },
-                                    child: Text("Checkout Now",
-                                        style: GoogleFonts.raleway(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: Colors.white))),
-                                Text("Wallet Tidak Boleh Kosong")
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(30, 30, 30, 10),
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                      // onPressed: () {},
+                                      child: Text("Checkout Now",
+                                          style: GoogleFonts.raleway(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.white))),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(30, 0, 30, 30),
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Get.off(TopUpPage());
+                                      },
+                                      child: Text("Top Up",
+                                          style: GoogleFonts.raleway(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.white))),
+                                ),
                               ],
-                            ),
-                          );
+                            );
+                          } else {
+                            return Container(
+                              margin: EdgeInsets.all(30),
+                              height: 50,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    pr.show();
+
+                                    BusProvider.postCheckOut(
+                                            "" +
+                                                widget.idorder +
+                                                "" +
+                                                snap.data.toString() +
+                                                "" +
+                                                widget.seat,
+                                            widget.idorder,
+                                            snap.data.toString(),
+                                            widget.seat,
+                                            widget.price.toString())
+                                        .then((value) {
+                                      print(value);
+                                      pref.setWallet(value);
+                                      print(pref.getWallet());
+                                    });
+                                  },
+                                  child: Text("Checkout Now",
+                                      style: GoogleFonts.raleway(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.white))),
+                            );
+                          }
                         } else {
-                          return Container(
-                            margin: EdgeInsets.all(30),
-                            height: 50,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  BusProvider.postCheckOut(
-                                      "" +
-                                          widget.idorder +
-                                          "" +
-                                          snap.data.toString() +
-                                          "" +
-                                          widget.seat,
-                                      widget.idorder,
-                                      snap.data.toString(),
-                                      widget.seat,
-                                      widget.price.toString());
-                                },
-                                child: Text("Checkout Now",
-                                    style: GoogleFonts.raleway(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.white))),
+                          return Center(
+                            child: Container(
+                              height: 100,
+                              child: LottieBuilder.asset("assets/loading.json"),
+                            ),
                           );
                         }
                       })

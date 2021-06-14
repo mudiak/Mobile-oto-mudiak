@@ -75,7 +75,9 @@ class BusProvider extends ChangeNotifier {
 
     var jsonObject = json.decode(apiResult.body);
     print(jsonObject['response']);
-    Get.off(TicketDetailPage(idorder));
+    Get.off(MainPage(
+      initialPage: 1,
+    ));
     return jsonObject['response'];
   }
 

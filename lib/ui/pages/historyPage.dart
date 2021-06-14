@@ -133,6 +133,11 @@ class _HistoryPageState extends State<HistoryPage> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         LottieBuilder.asset("assets/data.json"),
+                                        Text("Data Is Empty",
+                                            style: GoogleFonts.raleway(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.lightBlue))
                                       ],
                                     )),
                                   );
@@ -160,7 +165,11 @@ class _HistoryPageState extends State<HistoryPage> {
                               }
 
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: Container(
+                                  height: 100,
+                                  child: LottieBuilder.asset(
+                                      "assets/loading.json"),
+                                ),
                               );
                             },
                           )
@@ -184,7 +193,11 @@ class _HistoryPageState extends State<HistoryPage> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         LottieBuilder.asset("assets/data.json"),
-                                        Text("Data Is Empty")
+                                        Text("Data Is Empty",
+                                            style: GoogleFonts.raleway(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.lightBlue))
                                       ],
                                     )),
                                   );
@@ -208,8 +221,12 @@ class _HistoryPageState extends State<HistoryPage> {
                               }
 
                               return Center(
+                                child: Container(
+                                  height: 100,
                                   child: LottieBuilder.asset(
-                                      "assets/loading.json"));
+                                      "assets/loading.json"),
+                                ),
+                              );
                             },
                           );
                   })),

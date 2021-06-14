@@ -26,3 +26,29 @@ class RegisterModel {
     return RegisterModel.createCustomer(jsonObject);
   }
 }
+
+class GantiPassword {
+  String response;
+  int kode;
+
+  GantiPassword({this.response, this.kode});
+
+  factory GantiPassword.gantiPassword(Map<String, dynamic> object) {
+    return GantiPassword(response: object['response'], kode: object['kode']);
+  }
+
+  static Future<GantiPassword> connectToAPI(
+      String username, String oldPassword, String newPassword) async {
+    var apiURL = Uri.parse(url + "gantipassword.php");
+
+    var apiResult = await http.post(apiURL, body: {
+      "username": username,
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    });
+
+    var jsonObject = json.decode(apiResult.body);
+
+    return GantiPassword.gantiPassword(jsonObject);
+  }
+}

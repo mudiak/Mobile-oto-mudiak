@@ -27,61 +27,61 @@ class TicketDetailPage extends StatelessWidget {
     //   finish = detailTicket.finish;
     // });
 
-    return FutureBuilder(
-        future: DetailTicket.connectToAPI(idorder).then((value) {
-          detailTicket = value;
-          busname = detailTicket.bus;
-          date = detailTicket.tgl;
-          time = detailTicket.time;
-          seat = detailTicket.seat;
-          price = int.parse(detailTicket.price);
-          idorder = detailTicket.idorder;
-          start = detailTicket.start;
-          finish = detailTicket.finish;
-          nama = detailTicket.nama;
-        }),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Scaffold(
-              body: SafeArea(
-                  child: ListView(
+    return Scaffold(
+        body: SafeArea(
+            child: ListView(
+      children: [
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 40, 40, 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 40, 40, 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          margin: EdgeInsets.only(right: 26),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/actionbar_title.png"))),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Center(
-                        child: Text("Ticket Details",
-                            style: GoogleFonts.raleway(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 28,
-                                color: Colors.black)),
-                      ),
-                    ),
-                  ],
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    margin: EdgeInsets.only(right: 26),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/actionbar_title.png"))),
+                  ),
                 ),
               ),
-              Container(
+              Expanded(
+                flex: 4,
+                child: Center(
+                  child: Text("Ticket Details",
+                      style: GoogleFonts.raleway(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 28,
+                          color: Colors.black)),
+                ),
+              ),
+            ],
+          ),
+        ),
+        FutureBuilder(
+            future: DetailTicket.connectToAPI(idorder).then((value) {
+              detailTicket = value;
+              busname = detailTicket.bus;
+              date = detailTicket.tgl;
+              time = detailTicket.time;
+              seat = detailTicket.seat;
+              price = int.parse(detailTicket.price);
+              idorder = detailTicket.idorder;
+              start = detailTicket.start;
+              finish = detailTicket.finish;
+              nama = detailTicket.nama;
+            }),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              // if (snapshot.hasData) {
+              return Container(
                 margin: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -333,10 +333,18 @@ class TicketDetailPage extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-            ],
-          )));
-        });
+              );
+              // } else {
+              //   return Center(
+              //     child: Container(
+              //       height: 100,
+              //       child: LottieBuilder.asset("assets/loading.json"),
+              //     ),
+              //   );
+              // }
+            }),
+      ],
+    )));
   }
 }
 

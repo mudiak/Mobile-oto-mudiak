@@ -100,76 +100,73 @@ class _TopUpPageState extends State<TopUpPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: item.map((data) {
-                                return InkWell(
-                                  onTap: () {
-                                    topWallet = data;
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        margin:
-                                            EdgeInsets.fromLTRB(20, 5, 20, 10),
-                                        width: double.infinity,
-                                        height: 75,
-                                        decoration: BoxDecoration(
+                        Container(
+                          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: item.map((data) {
+                              return InkWell(
+                                onTap: () {
+                                  topWallet = data;
+                                  setState(() {});
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(20, 5, 20, 10),
+                                      width: double.infinity,
+                                      height: 75,
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              spreadRadius: 2,
+                                              blurRadius: 7,
+                                              offset: Offset(1, 3),
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.white),
+                                      child: Center(
+                                          child: Text(
+                                              NumberFormat.currency(
+                                                      locale: 'id-ID',
+                                                      symbol: 'Rp. ',
+                                                      decimalDigits: 0)
+                                                  .format(data),
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 20,
+                                                  color: Colors.black54,
+                                                  fontWeight:
+                                                      FontWeight.w600))),
+                                    ),
+                                    Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.grey
-                                                    .withOpacity(0.3),
+                                                    .withOpacity(0.7),
                                                 spreadRadius: 2,
                                                 blurRadius: 7,
-                                                offset: Offset(1, 3),
-                                              ),
+                                                offset: Offset(0, 1),
+                                              )
                                             ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.white),
-                                        child: Center(
-                                            child: Text(
-                                                NumberFormat.currency(
-                                                        locale: 'id-ID',
-                                                        symbol: 'Rp. ',
-                                                        decimalDigits: 0)
-                                                    .format(data),
-                                                style: GoogleFonts.openSans(
-                                                    fontSize: 20,
-                                                    color: Colors.black54,
-                                                    fontWeight:
-                                                        FontWeight.w600))),
-                                      ),
-                                      Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.7),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 7,
-                                                  offset: Offset(0, 1),
-                                                )
-                                              ],
-                                            ),
-                                            height: 50,
-                                            child: Image.asset((topWallet ==
-                                                    data)
-                                                ? "assets/pilih.png"
-                                                : "assets/btn_belumpilih.png"),
-                                          ))
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
+                                          ),
+                                          height: 50,
+                                          child: Image.asset((topWallet == data)
+                                              ? "assets/pilih.png"
+                                              : "assets/btn_belumpilih.png"),
+                                        ))
+                                  ],
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
                         SizedBox(
