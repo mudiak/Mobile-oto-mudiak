@@ -2,7 +2,7 @@
     package="com.example.oto_mudiak">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="oto_mudiak"
+        android:label="Oto Mudiak"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
