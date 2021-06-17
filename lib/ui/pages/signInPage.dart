@@ -141,6 +141,8 @@ class _SignInPageState extends State<SignInPage> {
                         loginModel = value;
                         print(loginModel.wallet);
                         print(pref.getEmail());
+                        pr.hide();
+
                         if (loginModel.kode == 1) {
                           pr.hide();
                           pref.setEmail(loginModel.email);
@@ -150,7 +152,6 @@ class _SignInPageState extends State<SignInPage> {
                           pref.setPathPicture(loginModel.pathPicture);
                           Get.offAll(MainPage());
                         } else if (loginModel.kode == 101) {
-                          pr.hide();
                           Get.snackbar("", "",
                               backgroundColor: "F6C30E".toColor(),
                               icon: Icon(
