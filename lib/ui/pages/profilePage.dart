@@ -160,12 +160,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             future: pref.getUsername(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snap) {
-                              username = snap.data;
-                              return Text("Username : " + snap.data,
-                                  style: GoogleFonts.raleway(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black45));
+                              if (snap.hasData) {
+                                username = snap.data;
+                                return Text("Username : " + snap.data,
+                                    style: GoogleFonts.raleway(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black45));
+                              } else {
+                                return CircularProgressIndicator();
+                              }
                             })),
                   ],
                 ),
@@ -263,35 +267,41 @@ class _ProfilePageState extends State<ProfilePage> {
                                     future: pref.getUsername(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
-                                      return FutureBuilder(
-                                          future: busProvider
-                                              .getNama(snapshot.data),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot snap) {
-                                            return TextField(
-                                              controller: fullNameController
-                                                ..text = snap.data,
-                                              decoration: InputDecoration(
-                                                labelText: "Full Name",
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  borderSide: BorderSide(
-                                                      color: Colors.grey),
+                                      if (snapshot.hasData) {
+                                        return FutureBuilder(
+                                            future: busProvider
+                                                .getNama(snapshot.data),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snap) {
+                                              return TextField(
+                                                controller: fullNameController
+                                                  ..text = snap.data,
+                                                decoration: InputDecoration(
+                                                  labelText: "Full Name",
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide: BorderSide(
+                                                        color: Colors.grey),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                  hintText:
+                                                      "Please Enter Full Name",
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  borderSide: BorderSide(
-                                                      color: Colors.blue),
-                                                ),
-                                                hintText:
-                                                    "Please Enter Full Name",
-                                              ),
-                                            );
-                                          });
+                                              );
+                                            });
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
                                     }),
                               ),
                             ),

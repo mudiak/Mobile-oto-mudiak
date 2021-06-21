@@ -31,28 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        color: Colors.lightBlue,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  child: Text(
-                "OTO",
-                style: GoogleFonts.calistoga(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              )),
-              Container(
-                  child: Text("MUDIAK",
-                      style: GoogleFonts.calistoga(
-                          fontSize: 50,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white))),
-            ],
-          ),
-        ),
+        color: "2D9CDB".toColor(),
+        child: Center(child: Image.asset("assets/profil.png")),
       )),
     );
   }

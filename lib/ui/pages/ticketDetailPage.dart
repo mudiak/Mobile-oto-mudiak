@@ -3,11 +3,11 @@ part of 'pages.dart';
 class TicketDetailPage extends StatelessWidget {
   String busname = "sdsd";
   String date = "sdsd";
-  String time = "sdsd";
+  String time = "14:00:00";
   String seat = "sdsd";
   int price = 35000;
   String idorder;
-  String nama;
+  String nama = "sdfsdfsd";
   String start = "sdsd";
   String finish = "sdsd";
   DetailTicket detailTicket = null;
@@ -90,7 +90,7 @@ class TicketDetailPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(20, 20, 20, 40),
+                      margin: EdgeInsets.fromLTRB(10, 20, 10, 40),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +101,7 @@ class TicketDetailPage extends StatelessWidget {
                                 style: GoogleFonts.raleway(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
+                                    fontSize: 16)),
                           ),
                           SizedBox(
                             width: 10,
@@ -131,7 +131,7 @@ class TicketDetailPage extends StatelessWidget {
                                 style: GoogleFonts.raleway(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
+                                    fontSize: 16)),
                           )
                         ],
                       ),
@@ -208,7 +208,7 @@ class TicketDetailPage extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                                 child: Text(
-                                  date + " & " + time.substring(0, 5),
+                                  date + " & " + time,
                                   style: GoogleFonts.raleway(
                                       fontSize: 16, color: Colors.black),
                                 ),
@@ -335,6 +335,7 @@ class TicketDetailPage extends StatelessWidget {
                 ),
               );
               // } else {
+              //   print("sdfsdfsdf" + nama);
               //   return Center(
               //     child: Container(
               //       height: 100,

@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 .then((value) {
               registesModel = value;
               if (registesModel.kode == 1) {
-                Get.back();
+                Get.offAll(SignInPage());
 
                 Get.snackbar("", "",
                     backgroundColor: "2D9CDB".toColor(),
@@ -354,6 +354,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             passwordController.text == "" ||
                             confirmPasswordController.text == "") {
                           setState(() {
+                            pr.hide();
                             load = false;
                           });
                           Get.snackbar("", "",
@@ -375,6 +376,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         } else {
                           setState(() {
                             load = false;
+                            pr.hide();
                           });
                           if (passwordController.text !=
                               confirmPasswordController.text) {
@@ -396,6 +398,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       GoogleFonts.poppins(color: Colors.white),
                                 ));
                           } else if (uploadimage == null) {
+                            pr.hide();
+
                             Get.snackbar("", "",
                                 backgroundColor: "F6C30E".toColor(),
                                 icon: Icon(
@@ -413,7 +417,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   style:
                                       GoogleFonts.poppins(color: Colors.white),
                                 ));
+                            Get.back();
                           } else {
+                            pr.hide();
+
                             uploadImage(
                                 usernameController.text,
                                 fullNameController.text,

@@ -6,6 +6,7 @@ class TopUpPage extends StatefulWidget {
 }
 
 class _TopUpPageState extends State<TopUpPage> {
+  SharePreferencesHelper pref = SharePreferencesHelper();
   List<int> item = [
     40000,
     50000,
@@ -241,25 +242,40 @@ class _TopUpPageState extends State<TopUpPage> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return DialogPopUp(
-                                              topWallet.toString());
-                                        });
-                                  },
-                                  child: Container(
-                                      height: 65,
-                                      // color: Colors.red,
-                                      margin:
-                                          EdgeInsets.fromLTRB(0, 20, 20, 30),
-                                      child: Center(
-                                        child: Image.asset(
-                                            "assets/button_primary_circle.png"),
-                                      )),
-                                ),
+                                child: FutureBuilder(
+                                    future: pref.getUsername(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      return FutureBuilder(
+                                          future: pref.getName(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snap) {
+                                            return InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return DialogPopUp("" +
+                                                          snapshot.data +
+                                                          "#" +
+                                                          snap.data +
+                                                          "#" +
+                                                          topWallet.toString());
+                                                    });
+                                              },
+                                              child: Container(
+                                                  height: 65,
+                                                  // color: Colors.red,
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 20, 20, 30),
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        "assets/button_primary_circle.png"),
+                                                  )),
+                                            );
+                                          });
+                                    }),
                               ),
                             ],
                           ))

@@ -75,27 +75,40 @@ class SettingPage extends StatelessWidget {
                               future: pref.getUsername(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
-                                return FutureBuilder(
-                                    future: busProvider.getNama(snapshot.data),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snap) {
-                                      if (snap.hasData) {
-                                        return Text(
-                                          snap.data,
-                                          style: GoogleFonts.raleway(
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.w500),
-                                        );
-                                      } else {
-                                        return Center(
-                                          child: Container(
-                                            height: 50,
-                                            child: LottieBuilder.asset(
-                                                "assets/loading.json"),
-                                          ),
-                                        );
-                                      }
-                                    });
+                                // print(snapshot.data);
+                                // return SizedBox();
+                                if (snapshot.hasData) {
+                                  return FutureBuilder(
+                                      future:
+                                          busProvider.getNama(snapshot.data),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snap) {
+                                        if (snap.hasData) {
+                                          return Text(
+                                            snap.data,
+                                            style: GoogleFonts.raleway(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.w500),
+                                          );
+                                        } else {
+                                          return Center(
+                                            child: Container(
+                                              height: 50,
+                                              child: LottieBuilder.asset(
+                                                  "assets/loading.json"),
+                                            ),
+                                          );
+                                        }
+                                      });
+                                } else {
+                                  return Center(
+                                    child: Container(
+                                      height: 50,
+                                      child: LottieBuilder.asset(
+                                          "assets/loading.json"),
+                                    ),
+                                  );
+                                }
                               })),
                       SizedBox(
                         height: 10,

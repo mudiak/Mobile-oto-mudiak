@@ -207,31 +207,6 @@ class _HomePageState extends State<HomePage> {
                         selectedItem: "Search ",
                       );
                     })),
-            Container(
-              height: 35,
-              margin: EdgeInsets.fromLTRB(40, 10, 40, 0),
-              child: Center(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    suffixIcon: GestureDetector(
-                        onTap: () {}, child: Icon(Icons.cancel)),
-                  ),
-                ),
-              ),
-            ),
             Expanded(
               child: FutureBuilder(
                 future: (lokasi == null)
